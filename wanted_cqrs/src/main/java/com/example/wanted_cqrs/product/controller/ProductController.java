@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.wanted_cqrs.product.dto.CreateProduct;
+import com.example.wanted_cqrs.product.dto.request.CreateProduct;
 import com.example.wanted_cqrs.product.service.ProductService;
 
 @RequestMapping("/api/products")
@@ -20,6 +20,7 @@ public class ProductController {
 	@PostMapping
 	public String createProduct(@RequestBody CreateProduct createProduct) {
 		productService.registerProduct(createProduct);
+		System.out.println(createProduct.toString());
 		return "테스트";
 	}
 }

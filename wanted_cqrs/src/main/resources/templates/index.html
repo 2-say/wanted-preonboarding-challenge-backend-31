@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<style>
+    dotlottie-player {
+        position: fixed;
+        width: 400px;
+        height: 400px;
+        z-index: 99;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+<script>
+    class LottiUI {
+        constructor(x, y) {
+            const div = document.createElement('dotlottie-player');
+            div.setAttribute('src', 'https://lottie.host/824cb754-a11a-4458-bba0-1f5129c3ed76/NuLW5jGi8g.lottie');
+            div.setAttribute('background', 'transparent');
+            div.setAttribute('speed', '1');
+            div.setAttribute('loop', true);
+            div.setAttribute('autoplay', true);
+            div.style.cssText = 'top: ' + y + 'px; left: ' + x + 'px';
+            document.body.append(div);
+            setTimeout(() => {
+                div.remove();
+            }, 3000);
+        }
+    }
+
+    document.addEventListener('pointerdown', event => {
+        const x = event.clientX;
+        const y = event.clientY;
+        new LottiUI(x, y);
+    });
+</script>

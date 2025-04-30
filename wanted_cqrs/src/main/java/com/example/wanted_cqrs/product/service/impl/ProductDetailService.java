@@ -6,6 +6,8 @@ import com.example.wanted_cqrs.product.dto.request.ProductDetailRequest;
 import com.example.wanted_cqrs.product.entity.Product;
 import com.example.wanted_cqrs.product.entity.ProductDetail;
 import com.example.wanted_cqrs.product.repository.ProductDetailRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ProductDetailService {
@@ -15,17 +17,26 @@ public class ProductDetailService {
 		this.productDetailRepository = productDetailRepository;
 	}
 
-	public void saveProductDetail(Product product, ProductDetailRequest detail) {
-		// TODO jsonb 변환 additional
-		// TODO json dimensions
+	public void saveProductDetail(Product product, ProductDetailRequest detail){
+		// JSON 변환
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonAdditionalInfo;
+		String jsonDimensions;
+
+		try {
+			jsonAdditionalInfo = objectMapper.writeValueAsString(detail.additionalInfo());
+			jsonDimensions = objectMapper.writeValueAsString(detail.dimensions());
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 
 		ProductDetail productDetail = ProductDetail.builder()
-			.additionalInfo(detail.additionalInfo().toString())
+			.additionalInfo(jsonAdditionalInfo)
 			.careInstructions(detail.careInstructions())
 			.materials(detail.materials())
 			.countryOfOrigin(detail.countryOfOrigin())
 			.warrantyInfo(detail.warrantyInfo())
-			.dimensions(String.valueOf(detail.dimensions()))
+			.dimensions(jsonDimensions)
 			.product(product)
 			.build();
 

@@ -1,27 +1,17 @@
 package com.example.wanted_cqrs.product.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.wanted_cqrs.brand.entity.Brand;
 import com.example.wanted_cqrs.brand.repository.BrandRepository;
-import com.example.wanted_cqrs.category.entity.Category;
-import com.example.wanted_cqrs.category.repository.CategoryRepository;
 import com.example.wanted_cqrs.product.dto.request.CreateProduct;
-import com.example.wanted_cqrs.product.dto.request.ProductCategoryRequest;
 import com.example.wanted_cqrs.product.entity.Product;
-import com.example.wanted_cqrs.product.entity.ProductCategory;
-import com.example.wanted_cqrs.product.entity.ProductTag;
-import com.example.wanted_cqrs.product.repository.ProductCategoryRepository;
 import com.example.wanted_cqrs.product.repository.ProductRepository;
-import com.example.wanted_cqrs.product.repository.ProductTagRepository;
 import com.example.wanted_cqrs.product.service.ProductService;
 import com.example.wanted_cqrs.seller.entity.Seller;
 import com.example.wanted_cqrs.seller.repository.SellerRepository;
-import com.example.wanted_cqrs.tag.entity.Tag;
-import com.example.wanted_cqrs.tag.repository.TagRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {

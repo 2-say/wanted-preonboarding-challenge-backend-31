@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
   "name": "슈퍼 편안한 소파",
-  "slug": "super-comfortable-sofa",
+  "slug": "super-comfortable-sofa3",
   "short_description": "최고급 소재로 만든 편안한 소파",
   "full_description": "<p>이 소파는 최고급 소재로 제작되었으며...</p>",
   "seller_id": 1,

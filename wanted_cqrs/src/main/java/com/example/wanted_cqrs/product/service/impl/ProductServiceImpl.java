@@ -3,6 +3,7 @@ package com.example.wanted_cqrs.product.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.wanted_cqrs.brand.entity.Brand;
 import com.example.wanted_cqrs.brand.repository.BrandRepository;
@@ -22,11 +23,14 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductTagService productTagService;
 	private final ProductPriceService productPriceService;
 	private final ProductDetailService productDetailService;
+	private final ProductOptionService productOptionService;
+	private final ProductImageService productImageService;
 
 	public ProductServiceImpl(SellerRepository sellerRepository, BrandRepository brandRepository,
 		ProductRepository productRepository, ProductCategoryService productCategoryService,
 		ProductTagService productTagService, ProductPriceService productPriceService,
-		ProductDetailService productDetailService) {
+		ProductDetailService productDetailService, ProductOptionService productOptionService,
+		ProductImageService productImageService) {
 		this.sellerRepository = sellerRepository;
 		this.brandRepository = brandRepository;
 		this.productRepository = productRepository;
@@ -34,8 +38,11 @@ public class ProductServiceImpl implements ProductService {
 		this.productTagService = productTagService;
 		this.productPriceService = productPriceService;
 		this.productDetailService = productDetailService;
+		this.productOptionService = productOptionService;
+		this.productImageService = productImageService;
 	}
 
+	@Transactional
 	@Override
 	public void registerProduct(CreateProduct createProduct) {
 		// save product entity
@@ -67,7 +74,10 @@ public class ProductServiceImpl implements ProductService {
 		// 상품 상세 저장
 		productDetailService.saveProductDetail(product, createProduct.detail());
 
+		// 상품 옵션 그룹 저장
+		productOptionService.saveProductOption(product, createProduct.optionGroups());
 
-
+		// 상품 이미지 저장
+		productImageService.saveProductImage(product, createProduct.images());
 	}
 }

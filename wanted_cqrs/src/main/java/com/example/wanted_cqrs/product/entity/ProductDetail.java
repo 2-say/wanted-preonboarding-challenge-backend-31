@@ -1,8 +1,16 @@
 package com.example.wanted_cqrs.product.entity;
 
 import java.math.BigDecimal;
+import java.util.Map;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
+
+import com.example.wanted_cqrs.util.JsonToMapConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +40,7 @@ public class ProductDetail {
 
 	private BigDecimal weight;
 
+	@JdbcTypeCode(SqlTypes.JSON)
 	@Column(columnDefinition = "jsonb")
 	private String dimensions;
 
@@ -40,6 +49,7 @@ public class ProductDetail {
 	private String warrantyInfo;
 	private String careInstructions;
 
+	@JdbcTypeCode(SqlTypes.JSON)
 	@Column(columnDefinition = "jsonb")
-	private String additionalInfo;
+	private Map<String, Object> additionalInfo;
 }

@@ -20,7 +20,6 @@ public class ProductController {
 	@PostMapping
 	public String createProduct(@RequestBody CreateProduct createProduct) {
 		productService.registerProduct(createProduct);
-		System.out.println(createProduct.toString());
 		return "테스트";
 	}
 }

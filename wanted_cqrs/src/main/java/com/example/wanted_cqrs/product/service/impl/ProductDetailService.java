@@ -18,20 +18,16 @@ public class ProductDetailService {
 	}
 
 	public void saveProductDetail(Product product, ProductDetailRequest detail){
-		// JSON 변환
 		ObjectMapper objectMapper = new ObjectMapper();
-		String jsonAdditionalInfo;
 		String jsonDimensions;
-
 		try {
-			jsonAdditionalInfo = objectMapper.writeValueAsString(detail.additionalInfo());
 			jsonDimensions = objectMapper.writeValueAsString(detail.dimensions());
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
 
 		ProductDetail productDetail = ProductDetail.builder()
-			.additionalInfo(jsonAdditionalInfo)
+			.additionalInfo(detail.additionalInfo())
 			.careInstructions(detail.careInstructions())
 			.materials(detail.materials())
 			.countryOfOrigin(detail.countryOfOrigin())

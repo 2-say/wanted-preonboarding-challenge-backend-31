@@ -1,30 +1,49 @@
 package com.example.wanted_cqrs.product.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.wanted_cqrs.brand.entity.Brand;
 import com.example.wanted_cqrs.brand.repository.BrandRepository;
+import com.example.wanted_cqrs.category.entity.Category;
+import com.example.wanted_cqrs.category.repository.CategoryRepository;
 import com.example.wanted_cqrs.product.dto.request.CreateProduct;
+import com.example.wanted_cqrs.product.dto.request.ProductCategoryRequest;
 import com.example.wanted_cqrs.product.entity.Product;
+import com.example.wanted_cqrs.product.entity.ProductCategory;
+import com.example.wanted_cqrs.product.entity.ProductTag;
+import com.example.wanted_cqrs.product.repository.ProductCategoryRepository;
 import com.example.wanted_cqrs.product.repository.ProductRepository;
+import com.example.wanted_cqrs.product.repository.ProductTagRepository;
 import com.example.wanted_cqrs.product.service.ProductService;
 import com.example.wanted_cqrs.seller.entity.Seller;
 import com.example.wanted_cqrs.seller.repository.SellerRepository;
+import com.example.wanted_cqrs.tag.entity.Tag;
+import com.example.wanted_cqrs.tag.repository.TagRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
 	private final SellerRepository sellerRepository;
 	private final BrandRepository brandRepository;
 	private final ProductRepository productRepository;
+	private final ProductCategoryService productCategoryService;
+	private final ProductTagService productTagService;
+	private final ProductPriceService productPriceService;
+	private final ProductDetailService productDetailService;
 
 	public ProductServiceImpl(SellerRepository sellerRepository, BrandRepository brandRepository,
-		ProductRepository productRepository) {
+		ProductRepository productRepository, ProductCategoryService productCategoryService,
+		ProductTagService productTagService, ProductPriceService productPriceService,
+		ProductDetailService productDetailService) {
 		this.sellerRepository = sellerRepository;
 		this.brandRepository = brandRepository;
 		this.productRepository = productRepository;
+		this.productCategoryService = productCategoryService;
+		this.productTagService = productTagService;
+		this.productPriceService = productPriceService;
+		this.productDetailService = productDetailService;
 	}
 
 	@Override
@@ -46,7 +65,17 @@ public class ProductServiceImpl implements ProductService {
 
 		productRepository.save(product);
 
-		//
+		// 상품 카테고리 저장
+		productCategoryService.saveProductCategory(createProduct.categories(), product);
+
+		//상품 태그 저장
+		productTagService.saveProductTag(createProduct.tags(), product);
+
+		// 상품 가격 저장
+		productPriceService.saveProductPrice(product, createProduct.price());
+
+		// 상품 상세 저장
+		productDetailService.saveProductDetail(product, createProduct.detail());
 
 
 
